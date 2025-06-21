@@ -1,0 +1,5 @@
+export * from './excelToPdf'
+export * from './pdfToPng'
+export * from './pdfToWord'
+export * from './wordToPdf'
+export * from './txtToPdf'
