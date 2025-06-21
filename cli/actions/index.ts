@@ -1,0 +1,7 @@
+export * from './handleFile.js'
+export * from './handleFolder.js'
+export * from './handleOrganizer.js'
+export * from './handleReport.js'
+export * from './handleDuplicator.js'
+export * from './handleConverter.js'
+export * from './handleExtras.js'
