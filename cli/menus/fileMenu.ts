@@ -20,16 +20,17 @@ export async function showFileMenu(): Promise<void> {
       type: 'list',
       name: 'action',
       message: chalk.bold('O que deseja fazer?'),
+      pageSize: 20,
       choices: [
         { name: '📄 Criar Arquivo', value: 'create' },
         { name: '📖 Ler Arquivo', value: 'read' },
-        { name: '✏️ Renomear Arquivo', value: 'rename' },
+        { name: '✏️  Renomear Arquivo', value: 'rename' },
         { name: '🚚 Mover Arquivo', value: 'move' },
         { name: '📋 Copiar Arquivo', value: 'copy' },
-        { name: '🗑️ Excluir Arquivo', value: 'delete' },
+        { name: '🗑️  Excluir Arquivo', value: 'delete' },
         { name: '🔁 Converter Arquivo', value: 'convert' },
         new inquirer.Separator(),
-        { name: '⬅️ Voltar ao menu principal', value: 'back' }
+        { name: '⬅️  Voltar ao menu principal', value: 'back' }
       ]
     }
   ])

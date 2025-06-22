@@ -1,0 +1,23 @@
+{
+  "name": "Mover arquivos .p12 e .ptx sem duplicatas",
+  "steps": [
+    {
+      "action": "filter",
+      "criteria": {
+        "extensions": [".p12", ".ptx"]
+      }
+    },
+    {
+      "action": "removeDuplicates",
+      "criteria": {
+        "method": "content" 
+      }
+    },
+    {
+      "action": "move",
+      "criteria": {
+        "destination": "C:/Users/diego/Desktop/ArquivosUnicos"
+      }
+    }
+  ]
+}

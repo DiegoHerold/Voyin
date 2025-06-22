@@ -6,6 +6,7 @@ import { showFolderMenu } from './folderMenu.js'
 import { showOrganizerMenu } from './organizerMenu.js'
 import { showReportMenu } from './reportMenu.js'
 import { showDuplicatorMenu } from './duplicatorMenu.js'
+import { showExtraMenu } from './extraMenu.js' 
 
 export async function showMainMenu(): Promise<void> {
   console.clear()
@@ -16,18 +17,18 @@ export async function showMainMenu(): Promise<void> {
     { name: '📂 Gerenciar Pastas', value: 'folder' },
     { name: '🧠 Organizar Arquivos', value: 'organizer' },
     { name: '📊 Relatórios', value: 'report' },
-    { name: '♻️ Detectar Duplicados', value: 'duplicator' },
+    { name: '♻️  Detectar Duplicados', value: 'duplicator' },
     { name: '🔁 Conversores', value: 'converter' },
-    { name: '⚙️ Extras', value: 'extras' },
+    { name: '⚙️  Extras', value: 'extras' },
     { name: chalk.red('❌ Sair'), value: 'exit' }
   ]
 
   const { option } = await inquirer.prompt([
     {
-      type: 'rawlist',
+      type: 'list',
       name: 'option',
-      loop: false,
       message: chalk.bold('Selecione uma opção:'),
+      pageSize: 20,
       choices
     }
   ])
@@ -43,9 +44,10 @@ export async function showMainMenu(): Promise<void> {
       return showReportMenu()
     case 'duplicator':
       return showDuplicatorMenu()
-    case 'converter':
     case 'extras':
-      console.log(chalk.yellow('\n⚠️  Essa funcionalidade está em desenvolvimento.\n'))
+      return showExtraMenu()
+    case 'converter':
+      console.log(chalk.yellow('\n⚠️  Conversores ainda não foram implementados.\n'))
       await pause()
       return showMainMenu()
     case 'exit':

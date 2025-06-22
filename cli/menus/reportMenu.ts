@@ -12,10 +12,11 @@ export async function showReportMenu(): Promise<void> {
       type: 'list',
       name: 'action',
       message: chalk.bold('O que deseja fazer?'),
+      pageSize: 20,
       choices: [
         { name: '📄 Gerar relatório completo', value: 'generate' },
         new inquirer.Separator(),
-        { name: '⬅️ Voltar ao menu principal', value: 'back' }
+        { name: '⬅️  Voltar ao menu principal', value: 'back' }
       ]
     }
   ])

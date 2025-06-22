@@ -10,13 +10,13 @@ import { convertFile } from '../../src/core/fileManager/convertFile.js'
 import { navigateFolders } from '../helpers/navigateFolders.js'
 
 export async function handleCreateFile() {
-  const path = await navigateFolders('pasta', '📂 Escolha a pasta onde o arquivo será criado:')
+  const path = await navigateFolders('pasta', '📂 Selecione a pasta onde o arquivo será criado:')
   const { content } = await inquirer.prompt([
-    { type: 'input', name: 'content', message: 'Conteúdo inicial (opcional):', default: '' }
+    { type: 'input', name: 'content', message: '📝 Conteúdo inicial (opcional):', default: '' }
   ])
   try {
     const created = await createFile(path, content)
-    console.log(chalk.green(`Criado: ${created}`))
+    console.log(chalk.green(`✅ Arquivo criado: ${created}`))
   } catch (err) {
     console.error(chalk.red((err as Error).message))
   }
@@ -35,11 +35,11 @@ export async function handleReadFile() {
 export async function handleRenameFile() {
   const path = await navigateFolders('arquivo', '📄 Selecione o arquivo a ser renomeado:')
   const { name } = await inquirer.prompt([
-    { type: 'input', name: 'name', message: 'Novo nome:' }
+    { type: 'input', name: 'name', message: '✏️ Novo nome para o arquivo:' }
   ])
   try {
     const newPath = await renameFile(path, name)
-    console.log(chalk.green(`Renomeado para ${newPath}`))
+    console.log(chalk.green(`✅ Renomeado para: ${newPath}`))
   } catch (err) {
     console.error(chalk.red((err as Error).message))
   }
@@ -47,10 +47,10 @@ export async function handleRenameFile() {
 
 export async function handleMoveFile() {
   const path = await navigateFolders('arquivo', '📄 Selecione o arquivo a mover:')
-  const dest = await navigateFolders('pasta', '📂 Selecione a pasta destino:')
+  const dest = await navigateFolders('pasta', '📂 Selecione a pasta de destino:')
   try {
     const moved = await moveFile(path, dest)
-    console.log(chalk.green(`Movido para ${moved}`))
+    console.log(chalk.green(`✅ Movido para: ${moved}`))
   } catch (err) {
     console.error(chalk.red((err as Error).message))
   }
@@ -58,10 +58,10 @@ export async function handleMoveFile() {
 
 export async function handleCopyFile() {
   const path = await navigateFolders('arquivo', '📄 Selecione o arquivo a copiar:')
-  const dest = await navigateFolders('pasta', '📂 Selecione a pasta destino:')
+  const dest = await navigateFolders('pasta', '📂 Selecione a pasta de destino:')
   try {
     const copied = await copyFile(path, dest)
-    console.log(chalk.green(`Copiado para ${copied}`))
+    console.log(chalk.green(`✅ Copiado para: ${copied}`))
   } catch (err) {
     console.error(chalk.red((err as Error).message))
   }
@@ -71,7 +71,7 @@ export async function handleDeleteFile() {
   const path = await navigateFolders('arquivo', '📄 Selecione o arquivo a excluir:')
   try {
     await deleteFile(path)
-    console.log(chalk.green('Arquivo excluído'))
+    console.log(chalk.green('✅ Arquivo excluído com sucesso'))
   } catch (err) {
     console.error(chalk.red((err as Error).message))
   }
@@ -90,7 +90,7 @@ export async function handleConvertFile() {
   ])
   try {
     await convertFile({ input, output, type })
-    console.log(chalk.green('Conversão concluída'))
+    console.log(chalk.green('✅ Conversão concluída'))
   } catch (err) {
     console.error(chalk.red((err as Error).message))
   }

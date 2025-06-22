@@ -8,22 +8,27 @@ import {
   handleCopyFolder,
   handleDeleteFolder
 } from '../actions/folderActions.js'
+import { showMainMenu } from './mainMenu.js'
 
 export async function showFolderMenu(): Promise<void> {
   while (true) {
+    console.clear()
+    console.log(chalk.bold('\n📂 Gerenciar Pastas\n'))
+
     const { action } = await inquirer.prompt({
       type: 'list',
       name: 'action',
-      message: chalk.yellow('Pastas > Escolha uma ação'),
+      message: 'Escolha uma ação:',
+      pageSize: 20,
       choices: [
-        { name: 'Criar pasta', value: 'create' },
-        { name: 'Listar pasta', value: 'list' },
-        { name: 'Renomear pasta', value: 'rename' },
-        { name: 'Mover pasta', value: 'move' },
-        { name: 'Copiar pasta', value: 'copy' },
-        { name: 'Excluir pasta', value: 'delete' },
+        { name: '📁 Criar pasta', value: 'create' },
+        { name: '📄 Listar conteúdo', value: 'list' },
+        { name: '✏️  Renomear pasta', value: 'rename' },
+        { name: '📤 Mover pasta', value: 'move' },
+        { name: '📋 Copiar pasta', value: 'copy' },
+        { name: '🗑️  Excluir pasta', value: 'delete' },
         new inquirer.Separator(),
-        { name: 'Voltar', value: 'back' }
+        { name: '⬅️  Voltar ao menu principal', value: 'back' }
       ]
     })
 
@@ -47,7 +52,15 @@ export async function showFolderMenu(): Promise<void> {
         await handleDeleteFolder()
         break
       case 'back':
-        return
+        await showMainMenu()
     }
+
+    await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'continue',
+        message: '\nPressione [Enter] para voltar ao menu...',
+      }
+    ])
   }
 }

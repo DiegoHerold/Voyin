@@ -15,11 +15,12 @@ export async function showOrganizerMenu(): Promise<void> {
       type: 'list',
       name: 'action',
       message: chalk.bold('O que deseja fazer?'),
+      pageSize: 20,
       choices: [
-        { name: '🗂️ Organizar por extensão', value: 'organizeByExtension' },
+        { name: '🗂️  Organizar por extensão', value: 'organizeByExtension' },
         { name: '🔎 Analisar padrão de organização', value: 'analyzePattern' },
         new inquirer.Separator(),
-        { name: '⬅️ Voltar ao menu principal', value: 'back' }
+        { name: '⬅️  Voltar ao menu principal', value: 'back' }
       ]
     }
   ])

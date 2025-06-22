@@ -10,20 +10,21 @@ import {
 
 export async function showDuplicatorMenu(): Promise<void> {
   console.clear()
-  console.log(chalk.bold.cyan('\n♻️ Detectar Arquivos Duplicados\n'))
+  console.log(chalk.bold.cyan('\n♻️  Detectar Arquivos Duplicados\n'))
 
   const { action } = await inquirer.prompt([
     {
       type: 'list',
       name: 'action',
       message: chalk.bold('O que deseja fazer?'),
+      pageSize: 20,
       choices: [
         { name: '🔍 Duplicados por nome', value: 'name' },
         { name: '🧬 Duplicados por conteúdo', value: 'content' },
-        { name: '🗑️ Deletar duplicados', value: 'delete' },
+        { name: '🗑️  Deletar duplicados', value: 'delete' },
         { name: '📁 Agrupar duplicados em pasta', value: 'group' },
         new inquirer.Separator(),
-        { name: '⬅️ Voltar ao menu principal', value: 'back' }
+        { name: '⬅️  Voltar ao menu principal', value: 'back' }
       ]
     }
   ])
