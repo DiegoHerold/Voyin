@@ -26,10 +26,10 @@ voyin/
 ├── tsconfig.json             # Configuração do TypeScript
 ├── README.md                 # Documentação do projeto
 ├── .gitignore                # Arquivos ignorados pelo Git
+├── cli/                     # Código da interface de linha de comando
+│   └── index.ts             # Entrada da CLI
 └── src/
     ├── index.ts              # Entrada principal do sistema
-    ├── cli/
-    │   └── index.ts          # CLI interativa (terminal)
     ├── core/
     │   ├── fileManager.ts    # Funções de leitura e movimentação de arquivos
     │   ├── organizer.ts      # Funções de organização inteligente
@@ -41,3 +41,9 @@ voyin/
     │       └── Gui.tsx       # Componente principal da interface
     └── types/
         └── index.ts          # Tipagens compartilhadas
+
+Para iniciar a interface de linha de comando utilize:
+
+```bash
+npm run cli
+```

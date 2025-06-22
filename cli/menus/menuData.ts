@@ -42,7 +42,7 @@ export const menus: Record<string, MenuDefinition> = {
     label: 'Arquivos',
     message: 'Gerenciar arquivos:',
     options: [
-      { name: 'Em breve...', value: 'placeholder', action: handleFile },
+      { name: 'Abrir menu de arquivos', value: 'run', action: handleFile },
       { name: '🔙 Voltar', value: 'back', next: '..' }
     ]
   },
@@ -50,7 +50,7 @@ export const menus: Record<string, MenuDefinition> = {
     label: 'Pastas',
     message: 'Gerenciar pastas:',
     options: [
-      { name: 'Em breve...', value: 'placeholder', action: handleFolder },
+      { name: 'Abrir menu de pastas', value: 'run', action: handleFolder },
       { name: '🔙 Voltar', value: 'back', next: '..' }
     ]
   },
@@ -58,7 +58,7 @@ export const menus: Record<string, MenuDefinition> = {
     label: 'Organizador',
     message: 'Organizar arquivos:',
     options: [
-      { name: 'Em breve...', value: 'placeholder', action: handleOrganizer },
+      { name: 'Abrir menu do organizador', value: 'run', action: handleOrganizer },
       { name: '🔙 Voltar', value: 'back', next: '..' }
     ]
   },
@@ -66,7 +66,7 @@ export const menus: Record<string, MenuDefinition> = {
     label: 'Relatórios',
     message: 'Gerar relatórios:',
     options: [
-      { name: 'Em breve...', value: 'placeholder', action: handleReport },
+      { name: 'Gerar relatório', value: 'run', action: handleReport },
       { name: '🔙 Voltar', value: 'back', next: '..' }
     ]
   },
@@ -74,7 +74,7 @@ export const menus: Record<string, MenuDefinition> = {
     label: 'Duplicados',
     message: 'Detectar duplicados:',
     options: [
-      { name: 'Em breve...', value: 'placeholder', action: handleDuplicator },
+      { name: 'Abrir menu de duplicados', value: 'run', action: handleDuplicator },
       { name: '🔙 Voltar', value: 'back', next: '..' }
     ]
   },
@@ -82,7 +82,7 @@ export const menus: Record<string, MenuDefinition> = {
     label: 'Conversores',
     message: 'Converter arquivos:',
     options: [
-      { name: 'Em breve...', value: 'placeholder', action: handleConverter },
+      { name: 'Converter arquivo', value: 'run', action: handleConverter },
       { name: '🔙 Voltar', value: 'back', next: '..' }
     ]
   },
@@ -90,7 +90,7 @@ export const menus: Record<string, MenuDefinition> = {
     label: 'Extras',
     message: 'Opções extras:',
     options: [
-      { name: 'Em breve...', value: 'placeholder', action: handleExtras },
+      { name: 'Executar extras', value: 'run', action: handleExtras },
       { name: '🔙 Voltar', value: 'back', next: '..' }
     ]
   }
