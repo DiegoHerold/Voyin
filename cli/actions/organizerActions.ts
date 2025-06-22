@@ -1,9 +1,10 @@
-import inquirer from 'inquirer'
 import chalk from 'chalk'
-import { organizeByExtension, analyzeFolderPattern } from '../../core/organizer'
+import { organizeByExtension } from '../../src/core/organizer/organizeByExtension.js'
+import { analyzeFolderPattern } from '../../src/core/organizer/analyzeFolderPattern.js'
+import { navigateFolders } from '../helpers/navigateFolders.js'
 
 export async function handleOrganizeByExtension() {
-  const { path } = await inquirer.prompt({ name: 'path', message: 'Pasta a organizar:' })
+  const path = await navigateFolders('pasta', '📂 Selecione a pasta para organizar por extensão:')
   try {
     await organizeByExtension(path)
   } catch (err) {
@@ -12,7 +13,7 @@ export async function handleOrganizeByExtension() {
 }
 
 export async function handleAnalyzePattern() {
-  const { path } = await inquirer.prompt({ name: 'path', message: 'Pasta a analisar:' })
+  const path = await navigateFolders('pasta', '🔍 Selecione a pasta para analisar o padrão:')
   try {
     const result = analyzeFolderPattern(path)
     console.log(chalk.blue(JSON.stringify(result, null, 2)))

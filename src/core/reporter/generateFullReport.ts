@@ -1,7 +1,7 @@
-import { getTotalFilesAndFolders } from './getTotalFilesAndFolders'
-import { getFolderSizes } from './getFolderSizes'
-import { getFileTypesSummary } from './getFileTypesSummary'
-import { getRecentFiles } from './getRecentFiles'
+import { getTotalFilesAndFolders } from './getTotalFilesAndFolders.js'
+import { getFolderSizes } from './getFolderSizes.js'
+import { getFileTypesSummary } from './getFileTypesSummary.js'
+import { getRecentFiles } from './getRecentFiles.js'
 
 /**
  * Gera um relatório completo de uma pasta, com contagem de arquivos/pastas, tamanhos, tipos e arquivos recentes.

@@ -1,14 +1,13 @@
 import inquirer from 'inquirer'
 import chalk from 'chalk'
-import {
-  findDuplicateNames,
-  findDuplicateContents,
-  deleteDuplicates,
-  groupDuplicates
-} from '../../core/duplicator'
+import { findDuplicateNames } from '../../src/core/duplicator/findDuplicateNames.js'
+import { findDuplicateContents } from '../../src/core/duplicator/findDuplicateContents.js'
+import { deleteDuplicates } from '../../src/core/duplicator/deleteDuplicates.js'
+import { groupDuplicates } from '../../src/core/duplicator/groupDuplicates.js'
+import { navigateFolders } from '../helpers/navigateFolders.js'
 
 export async function handleFindDuplicateNames() {
-  const { path } = await inquirer.prompt({ name: 'path', message: 'Pasta para buscar duplicados por nome:' })
+  const path = await navigateFolders('pasta', '📂 Selecione a pasta para buscar duplicados por nome:')
   try {
     const dup = findDuplicateNames(path)
     console.log(chalk.blue(JSON.stringify(dup, null, 2)))
@@ -18,7 +17,7 @@ export async function handleFindDuplicateNames() {
 }
 
 export async function handleFindDuplicateContents() {
-  const { path } = await inquirer.prompt({ name: 'path', message: 'Pasta para buscar duplicados por conteúdo:' })
+  const path = await navigateFolders('pasta', '📂 Selecione a pasta para buscar duplicados por conteúdo:')
   try {
     const dup = findDuplicateContents(path)
     console.log(chalk.blue(JSON.stringify(dup, null, 2)))
@@ -28,7 +27,7 @@ export async function handleFindDuplicateContents() {
 }
 
 export async function handleDeleteDuplicates() {
-  const { path } = await inquirer.prompt({ name: 'path', message: 'Pasta onde deletar duplicados (por nome):' })
+  const path = await navigateFolders('pasta', '📂 Selecione a pasta onde deletar duplicados (por nome):')
   try {
     const dup = findDuplicateNames(path)
     await deleteDuplicates(dup)
@@ -38,7 +37,7 @@ export async function handleDeleteDuplicates() {
 }
 
 export async function handleGroupDuplicates() {
-  const { path } = await inquirer.prompt({ name: 'path', message: 'Pasta onde agrupar duplicados (por nome):' })
+  const path = await navigateFolders('pasta', '📂 Selecione a pasta onde agrupar duplicados (por nome):')
   try {
     const dup = findDuplicateNames(path)
     await groupDuplicates(dup, path)

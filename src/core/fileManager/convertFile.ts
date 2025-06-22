@@ -4,7 +4,7 @@ import {
   wordToPdf,
   excelToPdf,
   txtToPdf
-} from './helpers/converters'
+} from './helpers/converters/index.js'
 
 type ConversionType =
   | 'pdfToPng'

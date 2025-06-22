@@ -1,6 +1,6 @@
 import fs from 'fs-extra'
 import path from 'path'
-import { moveFileToFolder } from './moveFileToFolder'
+import { moveFileToFolder } from './moveFileToFolder.js'
 
 /**
  * Organiza arquivos com base no tamanho.

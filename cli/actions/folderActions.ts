@@ -1,16 +1,15 @@
 import inquirer from 'inquirer'
 import chalk from 'chalk'
-import {
-  createFolder,
-  listFolder,
-  renameFolder,
-  moveFolder,
-  copyFolder,
-  deleteFolder
-} from '../../core/folderManager'
+import { createFolder } from '../../src/core/folderManager/createFolder.js'
+import { listFolder } from '../../src/core/folderManager/listFolder.js'
+import { renameFolder } from '../../src/core/folderManager/renameFolder.js'
+import { moveFolder } from '../../src/core/folderManager/moveFolder.js'
+import { copyFolder } from '../../src/core/folderManager/copyFolder.js'
+import { deleteFolder } from '../../src/core/folderManager/deleteFolder.js'
+import { navigateFolders } from '../helpers/navigateFolders.js'
 
 export async function handleCreateFolder() {
-  const { path } = await inquirer.prompt({ name: 'path', message: 'Caminho da nova pasta:' })
+  const path = await navigateFolders('pasta', '📁 Selecione o local onde criar a nova pasta:')
   try {
     const created = await createFolder(path)
     console.log(chalk.green(`Criada: ${created}`))
@@ -20,7 +19,7 @@ export async function handleCreateFolder() {
 }
 
 export async function handleListFolder() {
-  const { path } = await inquirer.prompt({ name: 'path', message: 'Pasta a listar:' })
+  const path = await navigateFolders('pasta', '📁 Selecione a pasta para listar:')
   try {
     const items = await listFolder(path)
     console.log(chalk.blue(items.join('\n')))
@@ -30,9 +29,9 @@ export async function handleListFolder() {
 }
 
 export async function handleRenameFolder() {
-  const { path, name } = await inquirer.prompt([
-    { name: 'path', message: 'Pasta a renomear:' },
-    { name: 'name', message: 'Novo nome:' }
+  const path = await navigateFolders('pasta', '📁 Selecione a pasta a ser renomeada:')
+  const { name } = await inquirer.prompt([
+    { type: 'input', name: 'name', message: 'Novo nome:' }
   ])
   try {
     const newPath = await renameFolder(path, name)
@@ -43,10 +42,8 @@ export async function handleRenameFolder() {
 }
 
 export async function handleMoveFolder() {
-  const { path, dest } = await inquirer.prompt([
-    { name: 'path', message: 'Pasta de origem:' },
-    { name: 'dest', message: 'Destino:' }
-  ])
+  const path = await navigateFolders('pasta', '📁 Selecione a pasta de origem:')
+  const dest = await navigateFolders('pasta', '📂 Selecione o destino:')
   try {
     const moved = await moveFolder(path, dest)
     console.log(chalk.green(`Movida para ${moved}`))
@@ -56,10 +53,8 @@ export async function handleMoveFolder() {
 }
 
 export async function handleCopyFolder() {
-  const { path, dest } = await inquirer.prompt([
-    { name: 'path', message: 'Pasta de origem:' },
-    { name: 'dest', message: 'Destino:' }
-  ])
+  const path = await navigateFolders('pasta', '📁 Selecione a pasta de origem:')
+  const dest = await navigateFolders('pasta', '📂 Selecione o destino:')
   try {
     const copied = await copyFolder(path, dest)
     console.log(chalk.green(`Copiada para ${copied}`))
@@ -69,7 +64,7 @@ export async function handleCopyFolder() {
 }
 
 export async function handleDeleteFolder() {
-  const { path } = await inquirer.prompt({ name: 'path', message: 'Pasta a excluir:' })
+  const path = await navigateFolders('pasta', '📁 Selecione a pasta a excluir:')
   try {
     await deleteFolder(path)
     console.log(chalk.green('Pasta excluída'))

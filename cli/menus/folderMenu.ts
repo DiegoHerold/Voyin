@@ -7,7 +7,7 @@ import {
   handleMoveFolder,
   handleCopyFolder,
   handleDeleteFolder
-} from '../actions/folderActions'
+} from '../actions/folderActions.js'
 
 export async function showFolderMenu(): Promise<void> {
   while (true) {
