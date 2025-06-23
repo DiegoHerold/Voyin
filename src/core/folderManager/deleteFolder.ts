@@ -2,25 +2,24 @@ import fs from 'fs-extra'
 import path from 'path'
 
 /**
- * Exclui uma pasta e todo o seu conteúdo, se existir.
+ * Exclui uma ou mais pastas e seus conteúdos.
  * 
- * @param folderPath Caminho da pasta a ser removida
- * @returns true se a pasta foi removida com sucesso
- * @throws Erro se a pasta não existir ou não puder ser excluída
+ * @param folderPaths Caminhos das pastas a serem removidas
+ * @returns true se todas forem removidas com sucesso
+ * @throws Erro se alguma pasta não existir ou não puder ser excluída
  */
-export async function deleteFolder(folderPath: string): Promise<boolean> {
-  try {
+export async function deleteFolder(folderPaths: string[] | string): Promise<boolean> {
+  const paths = Array.isArray(folderPaths) ? folderPaths : [folderPaths]
+
+  for (const folderPath of paths) {
     const resolvedPath = path.resolve(folderPath)
 
-    // Verifica se a pasta existe
     if (!(await fs.pathExists(resolvedPath))) {
       throw new Error(`Pasta não encontrada: ${resolvedPath}`)
     }
 
     await fs.remove(resolvedPath)
-    return true
-  } catch (error) {
-    console.error(`Erro ao excluir a pasta: ${(error as Error).message}`)
-    throw error
   }
+
+  return true
 }

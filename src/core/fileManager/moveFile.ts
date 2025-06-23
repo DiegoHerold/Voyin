@@ -2,39 +2,45 @@ import fs from 'fs-extra'
 import path from 'path'
 
 /**
- * Move um arquivo de um local para outro.
- * 
- * @param sourcePath Caminho atual do arquivo
- * @param destinationDir Pasta de destino (pode existir ou não)
- * @returns Caminho final do arquivo movido
- * @throws Erro se o arquivo de origem não existir ou se o destino já contiver um arquivo com o mesmo nome
+ * Move um ou vários arquivos para uma pasta de destino.
+ *
+ * @param sourcePaths Caminho(s) do(s) arquivo(s) a ser(em) movido(s)
+ * @param destinationDir Pasta de destino
+ * @returns Lista com os caminhos finais dos arquivos movidos
+ * @throws Erro se algum arquivo não existir ou já existir no destino
  */
-export async function moveFile(sourcePath: string, destinationDir: string): Promise<string> {
+export async function moveFile(
+  sourcePaths: string | string[],
+  destinationDir: string
+): Promise<string[]> {
   try {
-    const resolvedSource = path.resolve(sourcePath)
     const resolvedDestinationDir = path.resolve(destinationDir)
-
-    // Verifica se o arquivo de origem existe
-    if (!(await fs.pathExists(resolvedSource))) {
-      throw new Error(`Arquivo de origem não encontrado: ${resolvedSource}`)
-    }
-
-    // Garante que a pasta de destino exista
     await fs.ensureDir(resolvedDestinationDir)
 
-    const fileName = path.basename(resolvedSource)
-    const destinationPath = path.join(resolvedDestinationDir, fileName)
+    const sources = Array.isArray(sourcePaths) ? sourcePaths : [sourcePaths]
+    const movedPaths: string[] = []
 
-    // Verifica se já existe um arquivo no destino com o mesmo nome
-    if (await fs.pathExists(destinationPath)) {
-      throw new Error(`Já existe um arquivo no destino: ${destinationPath}`)
+    for (const source of sources) {
+      const resolvedSource = path.resolve(source)
+
+      if (!(await fs.pathExists(resolvedSource))) {
+        throw new Error(`Arquivo de origem não encontrado: ${resolvedSource}`)
+      }
+
+      const fileName = path.basename(resolvedSource)
+      const destinationPath = path.join(resolvedDestinationDir, fileName)
+
+      if (await fs.pathExists(destinationPath)) {
+        throw new Error(`Já existe um arquivo no destino: ${destinationPath}`)
+      }
+
+      await fs.move(resolvedSource, destinationPath)
+      movedPaths.push(destinationPath)
     }
 
-    // Move o arquivo
-    await fs.move(resolvedSource, destinationPath)
-    return destinationPath
+    return movedPaths
   } catch (error) {
-    console.error(`Erro ao mover o arquivo: ${(error as Error).message}`)
+    console.error('❌ Erro ao mover arquivo(s):', (error as Error).message)
     throw error
   }
 }

@@ -2,27 +2,27 @@ import fs from 'fs-extra'
 import path from 'path'
 
 /**
- * Exclui um arquivo de forma segura.
+ * Exclui múltiplos arquivos ou pastas de forma segura.
  * 
- * @param filePath Caminho completo do arquivo a ser excluído
- * @returns true se excluído com sucesso
- * @throws Erro caso o arquivo não exista ou falhe a exclusão
+ * @param paths Array de caminhos a serem excluídos
+ * @returns true se todos os arquivos/pastas forem excluídos com sucesso
+ * @throws Erro caso algum caminho não exista ou falhe a exclusão
  */
-export async function deleteFile(filePath: string): Promise<boolean> {
+export async function deleteFile(paths: string[]): Promise<boolean> {
   try {
-    const resolvedPath = path.resolve(filePath)
+    for (const filePath of paths) {
+      const resolvedPath = path.resolve(filePath)
 
-    // Verifica se o arquivo existe
-    const exists = await fs.pathExists(resolvedPath)
-    if (!exists) {
-      throw new Error(`Arquivo não encontrado: ${resolvedPath}`)
+      if (!(await fs.pathExists(resolvedPath))) {
+        throw new Error(`Arquivo ou pasta não encontrado: ${resolvedPath}`)
+      }
+
+      await fs.remove(resolvedPath)
     }
 
-    // Remove o arquivo
-    await fs.remove(resolvedPath)
     return true
   } catch (error) {
-    console.error(`Erro ao excluir o arquivo: ${(error as Error).message}`)
+    console.error(`Erro ao excluir: ${(error as Error).message}`)
     throw error
   }
 }

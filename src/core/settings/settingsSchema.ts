@@ -1,0 +1,43 @@
+export const defaultSettings = {
+  user: {
+    githubUsername: "",
+    githubToken: "",
+    autoLogin: false
+  },
+  paths: {
+    defaultWorkspace: "",
+    defaultExportPath: "",
+    rememberLastFolder: true
+  },
+  behavior: {
+    autoClearTerminal: true,
+    askBeforeDelete: true,
+    confirmBeforeActions: false
+  },
+  performance: {
+    maxDepth: 5,
+    enableCache: false
+  },
+  appearance: {
+    theme: "dark",
+    useEmoji: true,
+    showFullPaths: false
+  },
+  network: {
+    proxyEnabled: false,
+    proxyURL: "",
+    timeout: 10000
+  },
+  updates: {
+    autoCheck: true,
+    checkIntervalDays: 7
+  },
+  diagnostics: {
+    enableLogs: false,
+    logLevel: "error"
+  },
+  cli: {
+    enableShortcuts: true,
+    defaultStartOption: "main"
+  }
+}

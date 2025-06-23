@@ -17,7 +17,7 @@ export async function navigateFolders(
     const itens = await fs.readdir(currentPath, { withFileTypes: true })
 
     const opcoes = [
-      ...(currentPath !== path.parse(currentPath).root ? ['⬅ Voltar'] : []),
+      ...(currentPath !== path.parse(currentPath).root ? ['⬅️  Voltar'] : []),
       ...(tipo === 'pasta' ? ['✅ Usar esta pasta'] : []),
       ...itens.map((item) =>
         item.isDirectory() ? `📁 ${item.name}` : `📄 ${item.name}`
@@ -32,7 +32,7 @@ export async function navigateFolders(
       choices: opcoes
     })
 
-    if (escolha === '⬅ Voltar') {
+    if (escolha === '⬅️  Voltar') {
       currentPath = path.dirname(currentPath)
       continue
     }

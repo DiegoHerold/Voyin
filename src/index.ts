@@ -1,3 +1,9 @@
-import { startCli } from '../cli/index.js';
+import { loadSettings } from './core/settings/loadSettings.js'
+import { startCli } from '../cli/index.js'
 
-startCli()
+async function start() {
+  await loadSettings() // Carrega ou gera o settings.json automaticamente
+  await startCli()     // Inicia o CLI com tudo pronto
+}
+
+start()

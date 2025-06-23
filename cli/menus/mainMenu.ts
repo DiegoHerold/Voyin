@@ -6,7 +6,8 @@ import { showFolderMenu } from './folderMenu.js'
 import { showOrganizerMenu } from './organizerMenu.js'
 import { showReportMenu } from './reportMenu.js'
 import { showDuplicatorMenu } from './duplicatorMenu.js'
-import { showExtraMenu } from './extraMenu.js' 
+import { showExtraMenu } from './extraMenu.js'
+import { showSettingsMenu } from './settings/settingsMenu.js' 
 
 export async function showMainMenu(): Promise<void> {
   console.clear()
@@ -18,8 +19,8 @@ export async function showMainMenu(): Promise<void> {
     { name: '🧠 Organizar Arquivos', value: 'organizer' },
     { name: '📊 Relatórios', value: 'report' },
     { name: '♻️  Detectar Duplicados', value: 'duplicator' },
-    { name: '🔁 Conversores', value: 'converter' },
-    { name: '⚙️  Extras', value: 'extras' },
+    { name: '🛠️  Extras', value: 'extras' },
+    { name: '⚙️  Configurações', value: 'settings' },
     { name: chalk.red('❌ Sair'), value: 'exit' }
   ]
 
@@ -46,14 +47,15 @@ export async function showMainMenu(): Promise<void> {
       return showDuplicatorMenu()
     case 'extras':
       return showExtraMenu()
-    case 'converter':
-      console.log(chalk.yellow('\n⚠️  Conversores ainda não foram implementados.\n'))
-      await pause()
-      return showMainMenu()
+    case 'settings':
+      return showSettingsMenu()
     case 'exit':
-    default:
       console.log(chalk.green('\nAté logo!\n'))
       process.exit()
+    default:
+      console.log(chalk.yellow('\n⚠️  Esta funcionalidade estará disponível em breve!\n'))
+      await pause()
+      return showMainMenu()
   }
 }
 

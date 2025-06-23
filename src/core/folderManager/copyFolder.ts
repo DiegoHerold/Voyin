@@ -2,23 +2,29 @@ import fs from 'fs-extra'
 import path from 'path'
 
 /**
- * Copia uma pasta (e todo seu conteúdo) para outro local.
+ * Copia uma ou mais pastas (e seus conteúdos) para outro local.
  * 
- * @param sourcePath Caminho da pasta de origem
- * @param destinationDir Diretório onde a pasta será copiada
- * @returns Caminho final da pasta copiada
- * @throws Erro se a origem não existir ou se o destino já contiver pasta com o mesmo nome
+ * @param sourcePaths Caminhos das pastas de origem
+ * @param destinationDir Diretório onde as pastas serão copiadas
+ * @returns Lista de caminhos finais das pastas copiadas
+ * @throws Erro se alguma pasta não existir ou se houver conflito no destino
  */
-export async function copyFolder(sourcePath: string, destinationDir: string): Promise<string> {
-  try {
-    const resolvedSource = path.resolve(sourcePath)
-    const resolvedDestDir = path.resolve(destinationDir)
+export async function copyFolder(
+  sourcePaths: string[] | string,
+  destinationDir: string
+): Promise<string[]> {
+  const resolvedDestDir = path.resolve(destinationDir)
+  const paths = Array.isArray(sourcePaths) ? sourcePaths : [sourcePaths]
+  const resultados: string[] = []
+
+  await fs.ensureDir(resolvedDestDir)
+
+  for (const source of paths) {
+    const resolvedSource = path.resolve(source)
 
     if (!(await fs.pathExists(resolvedSource))) {
       throw new Error(`Pasta de origem não encontrada: ${resolvedSource}`)
     }
-
-    await fs.ensureDir(resolvedDestDir)
 
     const folderName = path.basename(resolvedSource)
     const finalDestination = path.join(resolvedDestDir, folderName)
@@ -28,9 +34,8 @@ export async function copyFolder(sourcePath: string, destinationDir: string): Pr
     }
 
     await fs.copy(resolvedSource, finalDestination)
-    return finalDestination
-  } catch (error) {
-    console.error(`Erro ao copiar a pasta: ${(error as Error).message}`)
-    throw error
+    resultados.push(finalDestination)
   }
+
+  return resultados
 }

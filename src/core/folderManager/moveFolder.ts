@@ -2,23 +2,29 @@ import fs from 'fs-extra'
 import path from 'path'
 
 /**
- * Move uma pasta de um local para outro.
+ * Move uma ou mais pastas para um diretório de destino.
  * 
- * @param sourcePath Caminho da pasta original
- * @param destinationDir Pasta de destino (a pasta será movida para dentro dela)
- * @returns Caminho final da pasta movida
- * @throws Erro se a pasta de origem não existir ou se o destino já contiver pasta com o mesmo nome
+ * @param sourcePaths Array com caminhos das pastas a serem movidas
+ * @param destinationDir Pasta de destino
+ * @returns Lista com os caminhos finais das pastas movidas
+ * @throws Erro se qualquer pasta de origem não existir ou se já existir no destino
  */
-export async function moveFolder(sourcePath: string, destinationDir: string): Promise<string> {
-  try {
-    const resolvedSource = path.resolve(sourcePath)
-    const resolvedDestDir = path.resolve(destinationDir)
+export async function moveFolder(
+  sourcePaths: string[] | string,
+  destinationDir: string
+): Promise<string[]> {
+  const resolvedDestDir = path.resolve(destinationDir)
+  const paths = Array.isArray(sourcePaths) ? sourcePaths : [sourcePaths]
+  const resultados: string[] = []
+
+  await fs.ensureDir(resolvedDestDir)
+
+  for (const source of paths) {
+    const resolvedSource = path.resolve(source)
 
     if (!(await fs.pathExists(resolvedSource))) {
       throw new Error(`Pasta de origem não encontrada: ${resolvedSource}`)
     }
-
-    await fs.ensureDir(resolvedDestDir)
 
     const folderName = path.basename(resolvedSource)
     const finalDestination = path.join(resolvedDestDir, folderName)
@@ -28,9 +34,8 @@ export async function moveFolder(sourcePath: string, destinationDir: string): Pr
     }
 
     await fs.move(resolvedSource, finalDestination)
-    return finalDestination
-  } catch (error) {
-    console.error(`Erro ao mover a pasta: ${(error as Error).message}`)
-    throw error
+    resultados.push(finalDestination)
   }
+
+  return resultados
 }

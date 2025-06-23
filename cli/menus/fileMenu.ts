@@ -8,8 +8,9 @@ import {
   handleMoveFile,
   handleCopyFile,
   handleDeleteFile,
-  handleConvertFile
-} from '../actions/fileActions.js' // usando index.ts da pasta
+  handleConvertFile,
+  handleUpdateFile
+} from '../actions/fileActions.js' 
 
 export async function showFileMenu(): Promise<void> {
   console.clear()
@@ -28,7 +29,8 @@ export async function showFileMenu(): Promise<void> {
         { name: '🚚 Mover Arquivo', value: 'move' },
         { name: '📋 Copiar Arquivo', value: 'copy' },
         { name: '🗑️  Excluir Arquivo', value: 'delete' },
-        { name: '🔁 Converter Arquivo', value: 'convert' },
+        { name: chalk.gray('🔁 Converter Arquivo (em breve...)'), value: 'disabled' },
+        { name: '✍️  Atualizar Arquivo', value: 'update' }, 
         new inquirer.Separator(),
         { name: '⬅️  Voltar ao menu principal', value: 'back' }
       ]
@@ -57,7 +59,15 @@ export async function showFileMenu(): Promise<void> {
     case 'convert':
       await handleConvertFile()
       break
+    case 'update':
+      await handleUpdateFile()
+      break
     case 'back':
+    case 'disabled':
+      console.log(chalk.yellow('\n⚠️  Esta funcionalidade estará disponível em breve!\n'))
+      await pause()
+      return showFileMenu
+      ()
     default:
       return showMainMenu()
   }
